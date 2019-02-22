@@ -1,0 +1,37 @@
+version: "3.6"
+
+services:
+  micromdm:
+    image: korylprince/micromdm:v1.0.0
+    networks:
+      - traefik
+    volumes:
+      - micromdm_data:/data
+    environment:
+      API_KEY_PATH: /run/secrets/mdm_api_key
+      PORT: ":80"
+      CONFIG_PATH: /data/config
+      FILE_PATH: /data/files
+      SERVER_URL: "https://mdm.${DOMAIN}" 
+      WEBHOOK_URL: ""
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - "traefik.docker.network=traefik"
+        - "traefik.port=80"
+        - "traefik.frontend.rule=Host:mdm.${DOMAIN}"
+    secrets:
+      - mdm_api_key
+
+networks:
+  traefik:
+    external: true
+
+secrets:
+  mdm_api_key:
+    external: true
+
+volumes:
+  micromdm_data:
+    name: mdm_micromdm_data
