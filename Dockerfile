@@ -1,15 +1,15 @@
-FROM golang:1.13-alpine as builder
+FROM golang:1.15-alpine as builder
 
 RUN apk add --no-cache git build-base bash ca-certificates
 
-RUN git clone --branch "master" --single-branch \
+RUN git clone --branch "main" --single-branch \
     https://github.com/micromdm/micromdm.git  /go/src/github.com/micromdm/micromdm && \
     cd /go/src/github.com/micromdm/micromdm && \
-    git checkout ea5c0a3865e87f5de04a58dc2c67b5fa6f6fd7de && \
+    git checkout v1.7.1 && \
     make
 
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 RUN apk add --no-cache ca-certificates
 
