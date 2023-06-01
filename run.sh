@@ -24,4 +24,5 @@ exec /micromdm serve \
     -filerepo="$FILE_PATH" \
     -server-url="$SERVER_URL" \
     -udid-cert-auth-warn-only="$UDID_WARN_ONLY" \
+    -validate-scep-issuer="$VALIDATE_SCEP_ISSUER" \
     -command-webhook-url="$WEBHOOK_URL"
